@@ -2,18 +2,16 @@ import React from 'react';
 import '../../App.css';
 import "antd/dist/antd.css";
 import styles from "../styles.module.css"
-import Main from "../Body/Main/Main";
-import { Layout } from 'antd';
+import {Layout} from 'antd';
 
-const { Footer } = Layout;
+const {Footer} = Layout;
 
 const Profile = () => {
 
-    return(
+    return (
         <Layout className="layout">
-            <Main />
-            <Footer className={ styles.profile }
-                style={{ textAlign: 'center' }}>Kostili
+            <Footer className={styles.profile}
+                    style={{textAlign: 'center'}}>React
             </Footer>
         </Layout>);
 }
