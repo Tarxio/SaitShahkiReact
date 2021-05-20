@@ -1,0 +1,48 @@
+.reg {
+    border-bottom: 3px solid black;
+    padding: 0px 25% 5px;
+    font-family: Alice;
+    font-size: 40px;
+}
+
+.errors_text {
+    padding: 1px;
+    font-family: Alice;
+    font-size: 17px;
+    color: red;
+}
+
+.gutter-row {
+    padding: 3px 0;
+}
+
+.btn_modal {
+
+}
+
+label {
+    font-family: Alice;
+    font-size: 20px;
+}
+
+input {
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    background: #ffffff !important;
+    height: 30px;
+    width: 300px;
+    color: #000000;
+    font-size: 20px;
+    font-family: Alice;
+}
+
+.Button_other {
+    padding: 10px 30px;
+    font-family: Alice;
+    font-size: 20px;
+}
+
+

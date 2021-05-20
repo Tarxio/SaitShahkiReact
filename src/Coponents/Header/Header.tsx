@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 
 import "antd/dist/antd.css";
 import styles from "../styles.module.css"
-import {Button, Checkbox, Col, Form, Input, Layout, Row} from 'antd';
+import {Button, Col, Layout, Row} from 'antd';
 
 import IkonIgrat from "../../Media/Ikons/IkonIgrat.png"
 import stati from "../../Media/Ikons/stati.png"
@@ -11,39 +12,26 @@ import IkonTurnament from "../../Media/Ikons/IkonTurnament.png"
 import IkonKontacts from "../../Media/Ikons/IkonKontacts.png"
 
 import {NavLink} from 'react-router-dom';
-import Modal from "../Modal/Modal";
-import { registration } from '../../Actions/User';
+import Modal from "../../Modal/Modal";
+import ModalAuth from '../../Modal/auth/ModalAuth';
+import ModalReg from '../../Modal/auth/ModalReg';
+
 
 const {Header} = Layout;
-const layout = {
-    labelCol: {span: 8},
-    wrapperCol: {span: 16},
-};
-const tailLayout = {
-    wrapperCol: {offset: 8, span: 16},
-};
+
 
 const Head = () => {
 
-    const [username, setUsername] =useState("")
-    const [email, setEmail] =useState("")
-    const [password, setPassword] =useState("")
-
-
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
-    };
-
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-    };
-
-    {/*События авторизации*/
-    }
+    {/*События авторизации*/}
     const [modalActiveLog, setModalActiveLog] = useState(false);
-    {/*События регистрации*/
-    }
+
+    {/*События регистрации*/}
     const [modalActiveReg, setModalActiveReg] = useState(false);
+
+    // Хук состояния авторизации
+    // const isAuth = useSelector(state => state.user.isAuth)
+    const dispatch = useDispatch()
+
 
     return (
         <Layout className="layout">
@@ -93,106 +81,17 @@ const Head = () => {
                     </Col>
                 </Row>
             </Header>
+
             {/*Модальное окно авторизации*/}
             <Modal active={modalActiveLog} setActive={setModalActiveLog}>
-                <p className={styles.modal_text}>Авторизация</p>
-                <hr className={styles.hr}/>
-                <Form
-                    {...layout}
-                    name="basic"
-                    initialValues={{remember: true}}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                >
-                    <Form.Item
-                        label="Имя пользователя"
-                        name="username"
-                        rules={[{required: true, message: 'Please input your username!'}]}
-                    >
-                        <Input/>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Пароль"
-                        name="password"
-                        rules={[{required: true, message: 'Please input your password!'}]}
-                    >
-                        <Input.Password/>
-                    </Form.Item>
-
-                    <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                        <Checkbox>Запомнить меня</Checkbox>
-                    </Form.Item>
-
-                    <Form.Item {...tailLayout}>
-                        <Button type="primary" htmlType="submit">
-                            Войти
-                        </Button>
-                    </Form.Item>
-                </Form>
+              <ModalAuth />
             </Modal>
+
             {/*Модальное окно регистрации*/}
             <Modal active={modalActiveReg} setActive={setModalActiveReg}>
-                <p className={styles.modal_text}>Регистрация</p>
-                <hr className={styles.hr}/>
-                <Form
-                    {...layout}
-                    name="basic"
-                    initialValues={{remember: true}}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                >
-                    <Form.Item name={['username']} label="Имя пользователя" rules={[{required: true}]}>
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item name={['email']} label="E-mail" rules={[{type: 'email', required: true}]}>
-                        <Input/>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Пароль"
-                        name="password"
-                        rules={[{required: true, message: 'Please input your password!'}]}
-                    >
-                        <Input.Password/>
-                    </Form.Item>
-                    <Form.Item
-                        name="confirm"
-                        label="Повторите пароль"
-                        dependencies={['password']}
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please confirm your password!',
-                            },
-                            ({getFieldValue}) => ({
-                                validator(_, value) {
-                                    if (!value || getFieldValue('password') === value) {
-                                        return Promise.resolve();
-                                    }
-                                    return Promise.reject(new Error('The two passwords that you entered do not match!'));
-                                },
-                            }),
-                        ]}
-                    >
-                        <Input.Password/>
-                    </Form.Item>
-
-                    <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                        <Checkbox>Запомнить меня</Checkbox>
-                    </Form.Item>
-
-                    <Form.Item {...tailLayout}>
-                        <Button type="primary"
-                                htmlType="submit"
-                                onClick={() => registration(username, email, password)}
-                        >
-                            Зарегистрироваться
-                        </Button>
-                    </Form.Item>
-                </Form>
+                <ModalReg />
             </Modal>
+
         </Layout>
     )
 }
